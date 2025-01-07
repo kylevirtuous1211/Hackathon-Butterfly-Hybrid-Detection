@@ -1,16 +1,12 @@
 import torch
 import numpy as np
 from tqdm import tqdm
-from transformers import AutoModel
+from transformers import AutoModelForObjectDetection
 
-def get_dino_model(dino_name='facebook/dinov2-base'):
-    model = AutoModel.from_pretrained(dino_name)
-    model.eval()  
+def get_detrResnet_model(name='facebook/detr-resnet-50'):
+    model = AutoModelForObjectDetection.from_pretrained("facebook/detr-resnet-50")
     return model
 
-def fine_tune_dino_model(model, dloader, device, optimizer, criterion, epochs=10):
-    
-    
 def get_feats_and_meta(dloader, model, device, ignore_feats=False):
     all_feats = None
     labels = []
