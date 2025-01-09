@@ -5,6 +5,7 @@ How to train the model
 Hackathon-Butterfly-Hybrid (clone 下來的)
 │
 ├── input_data (創一個資料夾，把雲端下載的`both`放進去)
+│   ├──both (下載放這裡面)
 ├── DINO_notebook (跑這裡面的notebook就好了)
 ├── DINO_train (這個不用動)
 ├── submission (裡面有兩個上傳範例)
