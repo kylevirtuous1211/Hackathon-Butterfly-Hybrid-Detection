@@ -1,16 +1,16 @@
 import torch
 import numpy as np
 from tqdm import tqdm
-from transformers import AutoModelForObjectDetection
+from transformers import AutoModel
 
-def get_detrResnet_model(name='facebook/detr-resnet-50'):
-    model = AutoModelForObjectDetection.from_pretrained("facebook/detr-resnet-50")
+def get_dino_model(dino_name='facebook/dinov2-base'):
+    model = AutoModel.from_pretrained(dino_name)
+    model.eval()  
     return model
 
 def get_feats_and_meta(dloader, model, device, ignore_feats=False):
     all_feats = None
     labels = []
-
     for img, lbl in tqdm(dloader, desc="Extracting features"):
         with torch.no_grad():
             feats = None

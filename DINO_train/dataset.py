@@ -33,13 +33,14 @@ class ButterflyDataset(Dataset):
     def __getitem__(self, index):
         x = self.data.iloc[index]
         img_path = self.get_file_path(x)
+        # Load the image and set to color mode 'RGB' to ensure consistency
         try:
             img = Image.open(img_path).convert('RGB')  # Ensure the image is in RGB format
         except Exception as e:
             raise FileNotFoundError(f"Error loading image at {img_path}: {e}")
-        
+        # Get the label
         lbl = self.labels[index]
-        
+        # Apply transformations if provided
         if self.transforms:
             img = self.transforms(img)
             

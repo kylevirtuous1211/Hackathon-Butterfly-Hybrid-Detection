@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from dataset import ButterflyDataset
 from data_utils import data_transforms, load_data
 from evaluation import evaluate, print_evaluation
-from model_utils import get_feats_and_meta, get_detrResnet_model
+from model_utils import get_feats_and_meta, get_dino_model
 from classifier import train, get_scores
 
 # Configuration         

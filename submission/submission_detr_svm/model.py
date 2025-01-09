@@ -12,7 +12,7 @@ import pickle
 
 import torch
 from torchvision import transforms
-from transformers import AutoModel
+from transformers import AutoModelForObjectDetection
 
 import numpy as np
 import PIL
@@ -21,7 +21,6 @@ from sklearn.linear_model import SGDClassifier
 
 class Model:
     def __init__(self):
-        self.dino_name = 'facebook/dinov2-base'
         self.pil_transform_fn = transforms.Compose([
             transforms.Resize((224, 224)),
             transforms.ToTensor(),
@@ -35,8 +34,7 @@ class Model:
 
     def load(self):
         # DINO backbone
-        model = AutoModel.from_pretrained(self.dino_name)
-        model.eval()
+        model = AutoModelForObjectDetection.from_pretrained("facebook/detr-resnet-50")
         self.model = model.to(self.device)
         
         # Classifier

@@ -61,7 +61,7 @@ def _filter(dataframe: pd.DataFrame, img_dir: str) -> pd.DataFrame:
 
 def load_data(data_path: str, img_dir: str, test_size: float = 0.2, random_state: int = 42) -> Tuple[pd.DataFrame, pd.DataFrame]:
     df = _filter(pd.read_csv(data_path), img_dir)
-    train_data, test_data = train_test_split(df, test_size=test_size, random_state=random_state)
+    train_data, test_data = train_test_split(df, test_size=test_size, stratify=df["hybrid_stat"], random_state=random_state)
     
     return train_data, test_data
 
