@@ -9,9 +9,37 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from tqdm import tqdm
 
+def replace_background_with_white(image, tolerance=70):
+    """
+    Replace all pixels matching bg_color with white.
+
+    :param image: PIL Image in RGB mode.
+    :param tolerance: Integer representing the color tolerance for matching background colors.
+    :return: PIL Image with background set to white.
+    """
+    img_array = np.array(image)
+    height, width, _ = img_array.shape
+    LU = img_array[0, 0]
+    RU = img_array[0, width-1]
+    corners = np.array((LU, RU))
+    bg_color = np.mean(np.array(corners), axis=0).astype(int)
+    distance = np.linalg.norm(img_array[:, :, :3] - bg_color, axis=2)
+    mask = distance <= tolerance
+    img_array[mask] = [255, 255, 255]
+    masked_image = Image.fromarray(img_array)
+    print("image is white background")
+    return masked_image
+
+def transform_replace_background(image):
+    """
+    Wrapper function to replace background with white.
+    """
+    return replace_background_with_white(image, tolerance=70)
+
 def data_transforms() -> transforms.Compose:
     return transforms.Compose([
         transforms.Resize((224, 224)),
+        transforms.Lambda(transform_replace_background),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
